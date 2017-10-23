@@ -31,16 +31,16 @@
 class PlayerChatEvent : public Event
 {
 public:
-	PlayerChatEvent(Object & sender, Player & player, std::string const & msg) :
+    PlayerChatEvent(ObjectPtr sender, std::shared_ptr<Player>  pPlayer, std::string const & msg) :
 	Event(sender),
-	player(player),
+	ptrPlayer(pPlayer),
 	msg(msg) {
 	}
 
 	virtual ~PlayerChatEvent() { }
 
-	Player & getPlayer() {
-		return player;
+    std::shared_ptr<Player> getPlayer() {
+		return ptrPlayer;
 	}
 
 	std::string const & getMessage() {
@@ -48,7 +48,7 @@ public:
 	}
 
 private:
-	Player & player;
+    std::shared_ptr<Player>  ptrPlayer;
 	std::string const & msg;
 
 };

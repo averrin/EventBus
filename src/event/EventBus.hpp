@@ -26,7 +26,7 @@
 #include "Object.hpp"
 #include "EventHandler.hpp"
 #include "Event.hpp"
-#include "HandlerRegistration.hpp"
+#include "EventRegisttration.hpp"
 
 #include <list>
 #include <typeinfo>
@@ -58,12 +58,12 @@ public:
 	 *
 	 * @return The singleton instance
 	 */
-	static EventBus* const GetInstance() {
-		if (instance == nullptr) {
-			instance = new EventBus();
+    static std::shared_ptr<EventBus> const GetInstance() {
+		if (ptrInstance == nullptr) {
+            ptrInstance = std::shared_ptr<EventBus>(new EventBus());
 		}
 
-		return instance;
+		return ptrInstance;
 	}
 
 
@@ -79,26 +79,26 @@ public:
 **	 * @return An EventRegistration pointer which can be used to unregister the event handler
 	 */
 	template <class T>
-	static HandlerRegistration* const AddHandler(EventHandler<T> & handler, Object & sender) {
-		EventBus* instance = GetInstance();
+    static std::shared_ptr<HandlerRegistration> const AddHandler(EventHandler<T> & handler, ObjectPtr sender) {
+        std::shared_ptr<EventBus> pInstance = GetInstance();
 
 		// Fetch the list of event pairs unique to this event type
-        std::list<EventRegistration*>* registrations = instance->handlers[typeid(T)];
+        std::shared_ptr<std::list<std::shared_ptr<EventRegistration>>> pRegistrations = pInstance->handlers[typeid(T)];
 
 		// Create a new collection instance for this type if it hasn't been created yet
-		if (registrations == nullptr) {
-            registrations = new std::list<EventRegistration*>();
-			instance->handlers[typeid(T)] = registrations;
+		if (pRegistrations == nullptr) {
+            pRegistrations = std::shared_ptr<std::list<std::shared_ptr<EventRegistration>>>(new std::list<std::shared_ptr<EventRegistration>>());
+			pInstance->handlers[typeid(T)] = pRegistrations;
 		}
 
 		// Create a new EventPair instance for this registration.
 		// This will group the handler, sender, and registration object into the same class
-		EventRegistration* registration = new EventRegistration(static_cast<void*>(&handler), registrations, &sender);
+        std::shared_ptr<EventRegistration> ptrRegistration = std::shared_ptr<EventRegistration>(new EventRegistration(static_cast<void*>(&handler), pRegistrations, sender));
 
 		// Add the registration object to the collection
-		registrations->push_back(registration);
+		pRegistrations->push_back(ptrRegistration);
 
-		return registration;
+		return ptrRegistration;
 	}
 
 
@@ -109,26 +109,26 @@ public:
 	 * @return An EventRegistration pointer which can be used to unregister the event handler
 	 */
 	template <class T>
-	static HandlerRegistration* const AddHandler(EventHandler<T> & handler) {
-		EventBus* instance = GetInstance();
+    static std::shared_ptr<HandlerRegistration> const AddHandler(EventHandler<T> & handler) {
+        std::shared_ptr<EventBus> pInstance = GetInstance();
 
 		// Fetch the list of event pairs unique to this event type
-        std::list<EventRegistration*> * registrations = instance->handlers[typeid(T)];
+        std::shared_ptr<std::list<std::shared_ptr<EventRegistration>>> pRegistrations = pInstance->handlers[typeid(T)];
 
 		// Create a new collection instance for this type if it hasn't been created yet
-		if (registrations == nullptr) {
-            registrations = new std::list<EventRegistration*>();
-			instance->handlers[typeid(T)] = registrations;
+		if (pRegistrations == nullptr) {
+            pRegistrations = std::shared_ptr<std::list<std::shared_ptr<EventRegistration>>>(new std::list<std::shared_ptr<EventRegistration>>());
+			pInstance->handlers[typeid(T)] = pRegistrations;
 		}
 
 		// Create a new EventPair instance for this registration.
 		// This will group the handler, sender, and registration object into the same class
-		EventRegistration* registration = new EventRegistration(static_cast<void*>(&handler), registrations, nullptr);
+        std::shared_ptr<EventRegistration> ptr_registration = std::shared_ptr<EventRegistration>(new EventRegistration(static_cast<void*>(&handler), pRegistrations, nullptr));
 
 		// Add the registration object to the collection
-		registrations->push_back(registration);
+		pRegistrations->push_back(ptr_registration);
 
-		return registration;
+		return ptr_registration;
 	}
 
 
@@ -138,24 +138,24 @@ public:
 	 * @param e The event to fire
 	 */
 	static void FireEvent(Event & e) {
-		EventBus* instance = GetInstance();
+        std::shared_ptr<EventBus> pInstance = GetInstance();
 
-        std::list<EventRegistration*>* registrations = instance->handlers[typeid(e)];
+        std::shared_ptr<std::list<std::shared_ptr<EventRegistration>>> pRegistrations = pInstance->handlers[typeid(e)];
 
-		// If the registrations list is null, then no handlers have been registered for this event
-		if (registrations == nullptr) {
+		// If thepRegistrationsregistrations list is null, then no handlers have been registered for this event
+		if (pRegistrations == nullptr) {
 			return;
 		}
 
 		// Iterate through all the registered handlers and dispatch to each one if the sender
 		// matches the source or if the sender is not specified
-		for (auto & reg : *registrations) {
-			if ((reg->getSender() == nullptr) || (reg->getSender() == &e.getSender())) {
+		for (auto & reg : *(pRegistrations.get())) {
+			if ((reg->getSender() == nullptr) || (reg->getSender() == e.getSender())) {
 
 				// This is where some magic happens. The void * handler is statically cast to an event handler
 				// of generic type Event and dispatched. The dispatch function will then do a dynamic
 				// cast to the correct event type so the matching onEvent method can be called
-				static_cast<EventHandler<Event>*>(reg->getHandler())->dispatch(e);
+                static_cast<EventHandler<Event>*>(reg->getHandler())->dispatch(e);
 			}
 		}
 	}
@@ -163,81 +163,8 @@ public:
 
 private:
 	// Singleton class instance
-	static EventBus* instance;
-
-
-	/**
-	 * \brief Registration class private to EventBus for registered event handlers
-	 */
-	class EventRegistration : public HandlerRegistration
-	{
-	public:
-
-		/**
-		 * \brief Represents a registration object for a registered event handler
-		 *
-		 * This object is stored in a collection with other handlers for the event type.
-		 *
-		 * @param handler The event handler
-		 * @param registrations The handler collection for this event type
-		 * @param sender The registered sender object
-		 */
-        EventRegistration(void * const handler, std::list<EventRegistration*> * const registrations, Object * const sender ) :
-			handler(handler),
-			registrations(registrations),
-			sender(sender),
-			registered(true)
-		{ }
-
-
-		/**
-		 * \brief Empty virtual destructor
-		 */
-		virtual ~EventRegistration() { }
-
-
-		/**
-		 * \brief Gets the event handler for this registration
-		 *
-		 * @return The event handler
-		 */
-		void * const getHandler() {
-			return handler;
-		}
-
-
-		/**
-		 * \brief Gets the sender object for this registration
-		 *
-		 * @return The registered sender object
-		 */
-		Object* const getSender() {
-			return sender;
-		}
-
-
-		/**
-		 * \brief Removes an event handler from the registration collection
-		 *
-		 * The event handler will no longer receive events for this event type
-		 */
-		virtual void removeHandler() {
-			if (registered) {
-				registrations->remove(this);
-				registered = false;
-			}
-		}
-
-	private:
-		void * const handler;
-        std::list<EventRegistration*>* const registrations;
-		Object* const sender;
-
-		bool registered;
-	};
-
-	typedef std::unordered_map<std::type_index, std::list<EventRegistration*>*> TypeMap;
-
+    static std::shared_ptr<EventBus> ptrInstance;
+    typedef std::unordered_map<std::type_index, std::shared_ptr<std::list<std::shared_ptr<EventRegistration>>>> TypeMap;
 	TypeMap handlers;
 
 };

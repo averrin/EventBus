@@ -23,6 +23,12 @@
 #ifndef _SRC_EVENT_OBJECT_HPP_
 #define _SRC_EVENT_OBJECT_HPP_
 
+#include <list>
+#include <typeinfo>
+
+#include <stdio.h>
+
+
 /**
  * \brief Root class of the type hierarchy
  *
@@ -33,13 +39,17 @@ public:
 	/**
 	 * \brief Default empty constructor
 	 */
-	Object() { }
+	Object() {
+        printf("Object Construct.\n");
+    }
 
 
 	/**
 	 * Empty virtual destructor
 	 */
-	virtual ~Object() {	}
+	virtual ~Object() {
+        printf("Object Unconstruct.\n");
+    }
 
 
 	/**
@@ -48,5 +58,7 @@ public:
 	 */
 	Object (const Object& other) { }
 };
+
+typedef std::shared_ptr<Object> ObjectPtr;
 
 #endif /* _SRC_EVENT_OBJECT_HPP_ */

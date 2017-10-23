@@ -41,8 +41,8 @@ public:
 	 *
 	 * @param sender The sender of the event
 	 */
-	Event(Object & sender) :
-		sender(sender),
+	Event(ObjectPtr pSender) :
+		ptrSender(pSender),
 		canceled(false) {
 	}
 
@@ -58,8 +58,8 @@ public:
 	 *
 	 * @return The event sender
 	 */
-	Object & getSender() {
-		return sender;
+	ObjectPtr getSender() {
+		return ptrSender;
 	}
 
 
@@ -83,7 +83,7 @@ public:
 	}
 
 private:
-	Object & sender;
+	ObjectPtr  ptrSender;
 	bool canceled;
 
 };

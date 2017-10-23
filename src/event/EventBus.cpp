@@ -23,5 +23,5 @@
 #include "EventBus.hpp"
 
 // Declare the static instance since this can't be done in the header file
-EventBus* EventBus::instance = nullptr;
+std::shared_ptr<EventBus> EventBus::ptrInstance = nullptr;
 

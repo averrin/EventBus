@@ -35,7 +35,7 @@ class PlayerMoveEvent;
  *
  * This is not part of the core functionality and can be modified or deleted as desired
  */
-class Player : public Object
+class Player : public Object, public std::enable_shared_from_this<Player>
 {
 public:
 	Player(std::string name) :
@@ -79,5 +79,6 @@ private:
 
 };
 
+typedef std::shared_ptr<Player> PlayerPtr;
 
 #endif /* _SRC_PLAYER_HPP_ */

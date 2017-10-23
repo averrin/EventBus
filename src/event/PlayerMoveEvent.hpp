@@ -36,9 +36,9 @@
 class PlayerMoveEvent : public Event
 {
 public:
-	PlayerMoveEvent(Object & sender, Player & player, int oldX, int oldY, int oldZ) :
+    PlayerMoveEvent(ObjectPtr sender, PlayerPtr pPlayer, int oldX, int oldY, int oldZ) :
 	Event(sender),
-	player(player),
+	ptrPlayer(pPlayer),
 	oldX(oldX),
 	oldY(oldY),
 	oldZ(oldZ) {
@@ -46,8 +46,8 @@ public:
 
 	virtual ~PlayerMoveEvent() { }
 
-	Player & getPlayer() {
-		return player;
+    PlayerPtr  getPlayer() {
+		return ptrPlayer;
 	}
 
 	int getOldX() {
@@ -63,7 +63,7 @@ public:
 	}
 
 private:
-	Player & player;
+    PlayerPtr ptrPlayer;
 
 	int oldX;
 	int oldY;
