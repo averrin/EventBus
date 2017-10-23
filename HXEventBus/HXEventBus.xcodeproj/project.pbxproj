@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		85C918A41F9D836400FEB0C5 /* EventBus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85C9189B1F9D836400FEB0C5 /* EventBus.cpp */; };
 		85C918A51F9D836400FEB0C5 /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85C918A21F9D836400FEB0C5 /* Main.cpp */; };
+		85C918A81F9DBB6900FEB0C5 /* EventRegisttration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85C918A61F9DBB6900FEB0C5 /* EventRegisttration.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +36,8 @@
 		85C918A11F9D836400FEB0C5 /* PlayerMoveEvent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PlayerMoveEvent.hpp; sourceTree = "<group>"; };
 		85C918A21F9D836400FEB0C5 /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Main.cpp; sourceTree = "<group>"; };
 		85C918A31F9D836400FEB0C5 /* Player.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Player.hpp; sourceTree = "<group>"; };
+		85C918A61F9DBB6900FEB0C5 /* EventRegisttration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventRegisttration.cpp; sourceTree = "<group>"; };
+		85C918A71F9DBB6900FEB0C5 /* EventRegisttration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EventRegisttration.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,12 +89,14 @@
 		85C918991F9D836400FEB0C5 /* event */ = {
 			isa = PBXGroup;
 			children = (
+				85C9189F1F9D836400FEB0C5 /* Object.hpp */,
 				85C9189A1F9D836400FEB0C5 /* Event.hpp */,
+				85C9189D1F9D836400FEB0C5 /* EventHandler.hpp */,
 				85C9189B1F9D836400FEB0C5 /* EventBus.cpp */,
 				85C9189C1F9D836400FEB0C5 /* EventBus.hpp */,
-				85C9189D1F9D836400FEB0C5 /* EventHandler.hpp */,
 				85C9189E1F9D836400FEB0C5 /* HandlerRegistration.hpp */,
-				85C9189F1F9D836400FEB0C5 /* Object.hpp */,
+				85C918A61F9DBB6900FEB0C5 /* EventRegisttration.cpp */,
+				85C918A71F9DBB6900FEB0C5 /* EventRegisttration.hpp */,
 				85C918A01F9D836400FEB0C5 /* PlayerChatEvent.hpp */,
 				85C918A11F9D836400FEB0C5 /* PlayerMoveEvent.hpp */,
 			);
@@ -156,6 +161,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85C918A81F9DBB6900FEB0C5 /* EventRegisttration.cpp in Sources */,
 				85C918A51F9D836400FEB0C5 /* Main.cpp in Sources */,
 				85C918A41F9D836400FEB0C5 /* EventBus.cpp in Sources */,
 			);

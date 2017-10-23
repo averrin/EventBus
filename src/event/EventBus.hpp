@@ -166,7 +166,6 @@ private:
     static std::shared_ptr<EventBus> ptrInstance;
     typedef std::unordered_map<std::type_index, std::shared_ptr<std::list<EventRegistrationPtr>>> TypeMap;
 	TypeMap handlers;
-
 };
 
 #endif /* _SRC_EVENT_EVENT_BUS_HPP_ */
