@@ -39,7 +39,6 @@ public:
 	/**
 	 * \brief Default constructor
 	 *
-	 * @param typeIndex The type ID of the inherited class
 	 * @param sender The sender of the event
 	 */
 	Event(Object & sender) :

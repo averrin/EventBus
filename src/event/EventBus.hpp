@@ -76,18 +76,18 @@ public:
 	 *
 	 * @param handler The event handler class
 	 * @param sender The source sender object
-	 * @return An EventRegistration pointer which can be used to unregister the event handler
+**	 * @return An EventRegistration pointer which can be used to unregister the event handler
 	 */
 	template <class T>
 	static HandlerRegistration* const AddHandler(EventHandler<T> & handler, Object & sender) {
 		EventBus* instance = GetInstance();
 
 		// Fetch the list of event pairs unique to this event type
-		Registrations* registrations = instance->handlers[typeid(T)];
+        std::list<EventRegistration*>* registrations = instance->handlers[typeid(T)];
 
 		// Create a new collection instance for this type if it hasn't been created yet
 		if (registrations == nullptr) {
-			registrations = new Registrations();
+            registrations = new std::list<EventRegistration*>();
 			instance->handlers[typeid(T)] = registrations;
 		}
 
@@ -113,11 +113,11 @@ public:
 		EventBus* instance = GetInstance();
 
 		// Fetch the list of event pairs unique to this event type
-		Registrations* registrations = instance->handlers[typeid(T)];
+        std::list<EventRegistration*> * registrations = instance->handlers[typeid(T)];
 
 		// Create a new collection instance for this type if it hasn't been created yet
 		if (registrations == nullptr) {
-			registrations = new Registrations();
+            registrations = new std::list<EventRegistration*>();
 			instance->handlers[typeid(T)] = registrations;
 		}
 
@@ -140,7 +140,7 @@ public:
 	static void FireEvent(Event & e) {
 		EventBus* instance = GetInstance();
 
-		Registrations* registrations = instance->handlers[typeid(e)];
+        std::list<EventRegistration*>* registrations = instance->handlers[typeid(e)];
 
 		// If the registrations list is null, then no handlers have been registered for this event
 		if (registrations == nullptr) {
@@ -172,8 +172,6 @@ private:
 	class EventRegistration : public HandlerRegistration
 	{
 	public:
-		typedef std::list<EventRegistration*> Registrations;
-
 
 		/**
 		 * \brief Represents a registration object for a registered event handler
@@ -184,7 +182,7 @@ private:
 		 * @param registrations The handler collection for this event type
 		 * @param sender The registered sender object
 		 */
-		EventRegistration(void * const handler, Registrations * const registrations, Object * const sender ) :
+        EventRegistration(void * const handler, std::list<EventRegistration*> * const registrations, Object * const sender ) :
 			handler(handler),
 			registrations(registrations),
 			sender(sender),
@@ -232,13 +230,12 @@ private:
 
 	private:
 		void * const handler;
-		Registrations* const registrations;
+        std::list<EventRegistration*>* const registrations;
 		Object* const sender;
 
 		bool registered;
 	};
 
-	typedef std::list<EventRegistration*> Registrations;
 	typedef std::unordered_map<std::type_index, std::list<EventRegistration*>*> TypeMap;
 
 	TypeMap handlers;
