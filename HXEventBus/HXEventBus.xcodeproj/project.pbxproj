@@ -32,12 +32,12 @@
 		85C9189D1F9D836400FEB0C5 /* EventHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EventHandler.hpp; sourceTree = "<group>"; };
 		85C9189E1F9D836400FEB0C5 /* HandlerRegistration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HandlerRegistration.hpp; sourceTree = "<group>"; };
 		85C9189F1F9D836400FEB0C5 /* Object.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Object.hpp; sourceTree = "<group>"; };
-		85C918A01F9D836400FEB0C5 /* PlayerChatEvent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PlayerChatEvent.hpp; sourceTree = "<group>"; };
-		85C918A11F9D836400FEB0C5 /* PlayerMoveEvent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PlayerMoveEvent.hpp; sourceTree = "<group>"; };
 		85C918A21F9D836400FEB0C5 /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Main.cpp; sourceTree = "<group>"; };
 		85C918A31F9D836400FEB0C5 /* Player.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Player.hpp; sourceTree = "<group>"; };
 		85C918A61F9DBB6900FEB0C5 /* EventRegisttration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventRegisttration.cpp; sourceTree = "<group>"; };
 		85C918A71F9DBB6900FEB0C5 /* EventRegisttration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EventRegisttration.hpp; sourceTree = "<group>"; };
+		85C918A91F9DD23100FEB0C5 /* PlayerChatEvent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PlayerChatEvent.hpp; sourceTree = "<group>"; };
+		85C918AA1F9DD23100FEB0C5 /* PlayerMoveEvent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PlayerMoveEvent.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +79,8 @@
 			isa = PBXGroup;
 			children = (
 				85C918991F9D836400FEB0C5 /* event */,
+				85C918A91F9DD23100FEB0C5 /* PlayerChatEvent.hpp */,
+				85C918AA1F9DD23100FEB0C5 /* PlayerMoveEvent.hpp */,
 				85C918A21F9D836400FEB0C5 /* Main.cpp */,
 				85C918A31F9D836400FEB0C5 /* Player.hpp */,
 			);
@@ -97,8 +99,6 @@
 				85C9189E1F9D836400FEB0C5 /* HandlerRegistration.hpp */,
 				85C918A61F9DBB6900FEB0C5 /* EventRegisttration.cpp */,
 				85C918A71F9DBB6900FEB0C5 /* EventRegisttration.hpp */,
-				85C918A01F9D836400FEB0C5 /* PlayerChatEvent.hpp */,
-				85C918A11F9D836400FEB0C5 /* PlayerMoveEvent.hpp */,
 			);
 			path = event;
 			sourceTree = "<group>";
