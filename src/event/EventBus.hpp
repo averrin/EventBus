@@ -79,21 +79,21 @@ public:
 **	 * @return An EventRegistration pointer which can be used to unregister the event handler
 	 */
 	template <class T>
-    static std::shared_ptr<HandlerRegistration> const AddHandler(EventHandler<T> & handler, ObjectPtr sender) {
+    static HandlerRegistrationPtr const AddHandler(EventHandler<T> & handler, ObjectPtr sender) {
         std::shared_ptr<EventBus> pInstance = GetInstance();
 
 		// Fetch the list of event pairs unique to this event type
-        std::shared_ptr<std::list<std::shared_ptr<EventRegistration>>> pRegistrations = pInstance->handlers[typeid(T)];
+        std::shared_ptr<std::list<EventRegistrationPtr>> pRegistrations = pInstance->handlers[typeid(T)];
 
 		// Create a new collection instance for this type if it hasn't been created yet
 		if (pRegistrations == nullptr) {
-            pRegistrations = std::shared_ptr<std::list<std::shared_ptr<EventRegistration>>>(new std::list<std::shared_ptr<EventRegistration>>());
+            pRegistrations = std::shared_ptr<std::list<EventRegistrationPtr>>(new std::list<EventRegistrationPtr>());
 			pInstance->handlers[typeid(T)] = pRegistrations;
 		}
 
 		// Create a new EventPair instance for this registration.
 		// This will group the handler, sender, and registration object into the same class
-        std::shared_ptr<EventRegistration> ptrRegistration = std::shared_ptr<EventRegistration>(new EventRegistration(static_cast<void*>(&handler), pRegistrations, sender));
+        EventRegistrationPtr ptrRegistration = EventRegistrationPtr(new EventRegistration(static_cast<void*>(&handler), pRegistrations, sender));
 
 		// Add the registration object to the collection
 		pRegistrations->push_back(ptrRegistration);
@@ -109,21 +109,21 @@ public:
 	 * @return An EventRegistration pointer which can be used to unregister the event handler
 	 */
 	template <class T>
-    static std::shared_ptr<HandlerRegistration> const AddHandler(EventHandler<T> & handler) {
+    static HandlerRegistrationPtr const AddHandler(EventHandler<T> & handler) {
         std::shared_ptr<EventBus> pInstance = GetInstance();
 
 		// Fetch the list of event pairs unique to this event type
-        std::shared_ptr<std::list<std::shared_ptr<EventRegistration>>> pRegistrations = pInstance->handlers[typeid(T)];
+        std::shared_ptr<std::list<EventRegistrationPtr>> pRegistrations = pInstance->handlers[typeid(T)];
 
 		// Create a new collection instance for this type if it hasn't been created yet
 		if (pRegistrations == nullptr) {
-            pRegistrations = std::shared_ptr<std::list<std::shared_ptr<EventRegistration>>>(new std::list<std::shared_ptr<EventRegistration>>());
+            pRegistrations = std::shared_ptr<std::list<EventRegistrationPtr>>(new std::list<EventRegistrationPtr>());
 			pInstance->handlers[typeid(T)] = pRegistrations;
 		}
 
 		// Create a new EventPair instance for this registration.
 		// This will group the handler, sender, and registration object into the same class
-        std::shared_ptr<EventRegistration> ptr_registration = std::shared_ptr<EventRegistration>(new EventRegistration(static_cast<void*>(&handler), pRegistrations, nullptr));
+        EventRegistrationPtr ptr_registration = EventRegistrationPtr(new EventRegistration(static_cast<void*>(&handler), pRegistrations, nullptr));
 
 		// Add the registration object to the collection
 		pRegistrations->push_back(ptr_registration);
@@ -140,7 +140,7 @@ public:
 	static void FireEvent(Event & e) {
         std::shared_ptr<EventBus> pInstance = GetInstance();
 
-        std::shared_ptr<std::list<std::shared_ptr<EventRegistration>>> pRegistrations = pInstance->handlers[typeid(e)];
+        std::shared_ptr<std::list<EventRegistrationPtr>> pRegistrations = pInstance->handlers[typeid(e)];
 
 		// If thepRegistrationsregistrations list is null, then no handlers have been registered for this event
 		if (pRegistrations == nullptr) {
@@ -164,7 +164,7 @@ public:
 private:
 	// Singleton class instance
     static std::shared_ptr<EventBus> ptrInstance;
-    typedef std::unordered_map<std::type_index, std::shared_ptr<std::list<std::shared_ptr<EventRegistration>>>> TypeMap;
+    typedef std::unordered_map<std::type_index, std::shared_ptr<std::list<EventRegistrationPtr>>> TypeMap;
 	TypeMap handlers;
 
 };

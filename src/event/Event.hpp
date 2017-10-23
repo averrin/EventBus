@@ -39,7 +39,7 @@ public:
 	/**
 	 * \brief Default constructor
 	 *
-	 * @param sender The sender of the event
+	 * @param pSender The sender of the event
 	 */
 	Event(ObjectPtr pSender) :
 		ptrSender(pSender),

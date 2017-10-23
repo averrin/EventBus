@@ -35,4 +35,6 @@ public:
 	virtual void removeHandler() = 0;
 };
 
+typedef std::shared_ptr<HandlerRegistration> HandlerRegistrationPtr;
+
 #endif /* _SRC_EVENT_HANDLER_REGISTRATION_HPP_ */

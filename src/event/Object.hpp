@@ -48,7 +48,7 @@ public:
 	 * Empty virtual destructor
 	 */
 	virtual ~Object() {
-        printf("Object Unconstruct.\n");
+        printf("Object Destruct.\n");
     }
 
 

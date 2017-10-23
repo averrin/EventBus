@@ -64,7 +64,9 @@ public:
      */
     virtual void removeHandler() {
         if (registered) {
+            printf("has handlers count: %lu before remove handler.\n", ptrRegistrations->size());
             ptrRegistrations->remove(shared_from_this());
+            printf("has handlers count: %lu after remove handler.\n", ptrRegistrations->size());
             registered = false;
         }
     }
@@ -76,5 +78,7 @@ private:
     
     bool registered;
 };
+
+typedef std::shared_ptr<EventRegistration> EventRegistrationPtr;
 
 #endif /* EventRegisttration_hpp */

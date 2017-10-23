@@ -199,8 +199,8 @@ public:
 	}
 
 private:
-    std::shared_ptr<HandlerRegistration> playerMoveReg;
-    std::shared_ptr<HandlerRegistration> playerChatReg;
+    HandlerRegistrationPtr playerMoveReg;
+    HandlerRegistrationPtr playerChatReg;
 
 
     bool setPlayerPostionWithEvent(PlayerPtr pPlayer, int x, int y, int z) {
