@@ -31,8 +31,11 @@
 #include <list>
 #include <typeinfo>
 #include <unordered_map>
+#include <iostream>
+#include <stdio.h>
 
 
+namespace eb {
 /**
  * \brief An Event system that allows decoupling of code through synchronous events
  *
@@ -138,6 +141,7 @@ public:
 	 * @param e The event to fire
 	 */
 	static void FireEvent(Event & e) {
+        std::cout << "event fired" << std::endl;
         std::shared_ptr<EventBus> pInstance = GetInstance();
 
         std::shared_ptr<std::list<EventRegistrationPtr>> pRegistrations = pInstance->handlers[typeid(e)];
@@ -168,4 +172,5 @@ private:
 	TypeMap handlers;
 };
 
+}
 #endif /* _SRC_EVENT_EVENT_BUS_HPP_ */

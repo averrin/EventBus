@@ -30,6 +30,7 @@
 #include <vector>
 #include <stdexcept>
 
+namespace eb {
 /**
  * \brief The base event class, all events inherit from this class
  */
@@ -87,5 +88,6 @@ private:
 	bool canceled;
 
 };
+}
 
 #endif /* _SRC_EVENT_EVENT_HPP_ */

@@ -27,7 +27,9 @@
 #include <typeinfo>
 
 #include <stdio.h>
+#include <memory>
 
+namespace eb {
 
 /**
  * \brief Root class of the type hierarchy
@@ -40,7 +42,7 @@ public:
 	 * \brief Default empty constructor
 	 */
 	Object() {
-        printf("Object Construct.\n");
+        // printf("Object Construct.\n");
     }
 
 
@@ -48,7 +50,7 @@ public:
 	 * Empty virtual destructor
 	 */
 	virtual ~Object() {
-        printf("Object Destruct.\n");
+        // printf("Object Destruct.\n");
     }
 
 
@@ -60,5 +62,6 @@ public:
 };
 
 typedef std::shared_ptr<Object> ObjectPtr;
+}
 
 #endif /* _SRC_EVENT_OBJECT_HPP_ */

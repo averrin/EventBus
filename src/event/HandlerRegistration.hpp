@@ -25,6 +25,7 @@
 
 #include "Object.hpp"
 
+namespace eb {
 /**
  * \brief Interface that that allows event handlers to be removed from the EventBus
  */
@@ -36,5 +37,6 @@ public:
 };
 
 typedef std::shared_ptr<HandlerRegistration> HandlerRegistrationPtr;
+}
 
 #endif /* _SRC_EVENT_HANDLER_REGISTRATION_HPP_ */

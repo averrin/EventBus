@@ -28,6 +28,7 @@
 #include <typeinfo>
 #include <type_traits>
 
+namespace eb {
 // Forward declare the Event class
 class Event;
 
@@ -77,5 +78,6 @@ public:
 		onEvent(dynamic_cast<T &>(e));
 	}
 };
+}
 
 #endif /* _SRC_EVENT_EVENT_HANDLER_HPP_ */

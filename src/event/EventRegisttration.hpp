@@ -7,6 +7,7 @@
 #include <unordered_map>
 
 #include <stdio.h>
+namespace eb {
 /**
  * \brief Registration class private to EventBus for registered event handlers
  */
@@ -80,5 +81,6 @@ private:
 };
 
 typedef std::shared_ptr<EventRegistration> EventRegistrationPtr;
+}
 
 #endif /* EventRegisttration_hpp */
